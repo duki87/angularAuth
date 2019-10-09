@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
 
   constructor(private userService: UserService, private authService: AuthenticationService) {
       this.currentUser = this.authService.currentUserValue;
+      console.log(this.authService.currentUserValue)
    }
 
   ngOnInit() {
@@ -28,7 +29,10 @@ export class HomeComponent implements OnInit {
       .subscribe(
         user => {
           this.loading = false;
-          this.userFromApi = user;
+          this.userFromApi = user;          
+        },
+        err => {
+          console.log(err)
         }
       )
   }

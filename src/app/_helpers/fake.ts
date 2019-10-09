@@ -50,7 +50,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 fname: user.fname,
                 lname: user.lname,
                 role: user.role,
-                token: `fake-jwt-token.${user.id}`
+                token: `${user.id}`
             });
         }
 
@@ -65,7 +65,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             // only admins can access other user records
             if (!isAdmin() && currentUser().id !== idFromUrl()) return unauthorized();
 
-            const user = users.find(x => x.id === idFromUrl());
+            const user = users.find(x => x.id === idFromUrl());          
             return ok(user);
         }
 
@@ -85,7 +85,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         function isLoggedIn() {
             const authHeader = headers.get('Authorization') || '';
-            return authHeader.startsWith('Bearer fake-jwt-token');
+            return authHeader.startsWith('Bearer');
         }
 
         function isAdmin() {
@@ -104,10 +104,3 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
     }
 }
-
-export const fakeBackendProvider = {
-    // use fake backend in place of Http service for backend-less development
-    provide: HTTP_INTERCEPTORS,
-    useClass: FakeBackendInterceptor,
-    multi: true
-};

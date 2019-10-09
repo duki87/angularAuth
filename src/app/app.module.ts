@@ -28,7 +28,7 @@ import { FakeBackendInterceptor } from './_helpers/fake';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    FakeBackendInterceptor
+    { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })
